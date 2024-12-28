@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\RealTimeApplication.MVC.props" />
+</Project>
