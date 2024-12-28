@@ -4778,11 +4778,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\hp\\Documents\\PracticeProjects\\RealTimeApplication\\RealTimeApplication.Operations\\RealTimeApplication.Operations.csproj",
+      "projectUniqueName": "C:\\Users\\hp\\Documents\\PracticeProjects\\RealtimeapplicationsignalR\\RealTimeApplication.Operations\\RealTimeApplication.Operations.csproj",
       "projectName": "RealTimeApplication.Operations",
-      "projectPath": "C:\\Users\\hp\\Documents\\PracticeProjects\\RealTimeApplication\\RealTimeApplication.Operations\\RealTimeApplication.Operations.csproj",
+      "projectPath": "C:\\Users\\hp\\Documents\\PracticeProjects\\RealtimeapplicationsignalR\\RealTimeApplication.Operations\\RealTimeApplication.Operations.csproj",
       "packagesPath": "C:\\Users\\hp\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\hp\\Documents\\PracticeProjects\\RealTimeApplication\\RealTimeApplication.Operations\\obj\\",
+      "outputPath": "C:\\Users\\hp\\Documents\\PracticeProjects\\RealtimeapplicationsignalR\\RealTimeApplication.Operations\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\hp\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -4797,8 +4797,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\hp\\Documents\\PracticeProjects\\RealTimeApplication\\RealTimeApplication.Infrastructure\\RealTimeApplication.Infrastructure.csproj": {
-              "projectPath": "C:\\Users\\hp\\Documents\\PracticeProjects\\RealTimeApplication\\RealTimeApplication.Infrastructure\\RealTimeApplication.Infrastructure.csproj"
+            "C:\\Users\\hp\\Documents\\PracticeProjects\\RealtimeapplicationsignalR\\RealTimeApplication.Infrastructure\\RealTimeApplication.Infrastructure.csproj": {
+              "projectPath": "C:\\Users\\hp\\Documents\\PracticeProjects\\RealtimeapplicationsignalR\\RealTimeApplication.Infrastructure\\RealTimeApplication.Infrastructure.csproj"
             }
           }
         }

@@ -8,6 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = RealTimeApplication.Infrastructure
-build_property.ProjectDir = C:\Users\hp\Documents\PracticeProjects\RealTimeApplication\RealTimeApplication.Infrastructure\
+build_property.ProjectDir = C:\Users\hp\Documents\PracticeProjects\RealtimeapplicationsignalR\RealTimeApplication.Infrastructure\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

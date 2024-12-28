@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "paWhwBVI66Y=",
+  "dgSpecHash": "jfKwe8jY6LI=",
   "success": true,
-  "projectFilePath": "C:\\Users\\hp\\Documents\\PracticeProjects\\RealTimeApplication\\RealTimeApplication.Infrastructure\\RealTimeApplication.Infrastructure.csproj",
+  "projectFilePath": "C:\\Users\\hp\\Documents\\PracticeProjects\\RealtimeapplicationsignalR\\RealTimeApplication.Infrastructure\\RealTimeApplication.Infrastructure.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\hp\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\hp\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
