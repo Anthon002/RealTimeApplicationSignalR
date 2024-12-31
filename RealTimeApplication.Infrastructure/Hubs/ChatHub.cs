@@ -1,6 +1,7 @@
 using System.Runtime.Intrinsics.Arm;
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 
@@ -8,10 +9,12 @@ namespace RealTimeApplication.Infrastructure.Hubs;
 public sealed class ChatHub : Hub
 {
     private readonly ILogger<ChatHub> _logger;
+    private readonly IHttpContextAccessor _httpContextAccessor;
     private static readonly string[] randomNames = ["Heather", "Jack", "Jane", "Olivia", "Liam", "Emma", "Noah", "Ava", "Ethan", "Mia", "Mason", "Sophia", "Logan", "Isabella", "Lucas", "Amelia", "Benjamin", "Charlotte", "Elijah", "Harper", "William", "Evelyn", "James", "Abigail", "Oliver", "Ella", "Henry", "Lily", "Alexander", "Scarlett", "Jacob", "Grace", "Michael", "Victoria", "Daniel", "Aurora", "Matthew", "Hannah", "Samuel", "Zoe", "Caleb", "Penelope", "Nathan", "Ruby", "Christopher", "Stella", "Andrew", "Aria", "Owen", "Ellie", "Ryan", "Chloe", "Dylan"];
-    public ChatHub(ILogger<ChatHub> logger)
+    public ChatHub(ILogger<ChatHub> logger, IHttpContextAccessor httpContextAccessor)
     {
         _logger = logger;
+        _httpContextAccessor = httpContextAccessor;
     }
 
     public void GeneralMessage(string message)
@@ -19,8 +22,20 @@ public sealed class ChatHub : Hub
         try
         {
             int index = Convert.ToInt32(GenerateIndex(0, randomNames.Count(), Context.ConnectionId));
-            var randomUserName = randomNames[index];
-            Clients.All.SendAsync("SendGeneralMessage", message, randomUserName);
+            var userName= randomNames[index];
+
+            var httpContext = _httpContextAccessor.HttpContext;
+            var isAuthenticated = httpContext.User.Identity?.IsAuthenticated;
+            if (isAuthenticated is not null)
+            {
+                var boolValue = (bool)isAuthenticated;
+                if (boolValue)
+                {
+                    userName = httpContext.User.Identity!.Name;
+                }
+            }
+
+            Clients.All.SendAsync("SendGeneralMessage", message, userName);
         }
         catch (Exception ex)
         {
@@ -48,7 +63,7 @@ public sealed class ChatHub : Hub
     {
         try
         {
-            Clients.All.SendAsync("SendNotTypingNotification","");
+            Clients.All.SendAsync("SendNotTypingNotification", "");
         }
         catch (Exception ex)
         {

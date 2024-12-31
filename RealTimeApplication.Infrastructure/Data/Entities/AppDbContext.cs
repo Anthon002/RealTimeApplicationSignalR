@@ -9,6 +9,6 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
     {
 
     }
-    public DbSet<ApplicationUser> AppUsers { get; set; }
+    public DbSet<ApplicationUser>? AppUsers { get; set; }
 
 }

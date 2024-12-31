@@ -6,6 +6,9 @@ namespace RealTimeApplication.Infrastructure.Data.Entities;
 public sealed class ApplicationUser : IdentityUser
 {
     [MaxLength(25)]
+    public string UserIdentifier { get; set; } = default!;
+
+    [MaxLength(25)]
     public string FirstName { get; set; } = default!;
 
     [MaxLength(25)]
@@ -13,3 +16,5 @@ public sealed class ApplicationUser : IdentityUser
     public DateTimeOffset TimeCreated { get; set; }
     public DateTimeOffset TimeUpdated { get; set; }
 }
+
+public sealed class AppRole : IdentityRole<long> {};

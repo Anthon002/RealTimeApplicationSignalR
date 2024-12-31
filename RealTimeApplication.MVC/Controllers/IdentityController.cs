@@ -10,15 +10,26 @@ namespace RealTimeApplication.MVC.Controllers;
 public class IdentityController : Controller
 {
     private readonly ISender _sender;
+    public IdentityController(ISender sender) => _sender = sender;
 
-    public IdentityController(ISender sender)
+    [HttpGet]
+    [ProducesResponseType(typeof(BaseResponse<string>), (int)HttpStatusCode.OK)]
+    public IActionResult SignUp(CancellationToken cancellationToken)
     {
-        _sender = sender;
+        return View();
+    }
+
+    [HttpPost]
+    [ProducesResponseType(typeof(BaseResponse<string>), (int)HttpStatusCode.OK)]
+    public async Task<IActionResult> SignUp([FromForm] RegistrationFormRequest request, CancellationToken cancellationToken)
+    {
+        var response = await _sender.Send(request, cancellationToken);
+        return RedirectToAction("Index", "Chat");
     }
 
     [HttpGet]
-    [ProducesResponseType(typeof(BaseResponse<string>),(int)HttpStatusCode.OK)]
-    public IActionResult SignUp([FromForm]RegistrationFormRequest request, CancellationToken cancellationToken)
+    [ProducesResponseType(typeof(BaseResponse<string>), (int)HttpStatusCode.OK)]
+    public IActionResult Login([FromForm] LoginFormRequest request, CancellationToken cancellationToken)
     {
         return View();
     }

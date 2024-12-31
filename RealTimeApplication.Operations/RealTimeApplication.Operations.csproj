@@ -5,6 +5,10 @@
   </ItemGroup>
 
   <ItemGroup>
+  <FrameworkReference Include ="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="mediatR" Version="12.4.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.2.0" />
   </ItemGroup>

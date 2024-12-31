@@ -1,0 +1,10 @@
+﻿@model RealTimeApplication.Operations.Handlers.Identity.RegistrationFormRequest;
+<div>
+    <form asp-action="SignUp" asp-controller="Identity">
+        <input asp-for="FirstName" type="text" placeholder="First Name" />
+        <input asp-for="LastName" type="text" placeholder="Last Name" />
+        <input asp-for="Email" type="email" placeholder="Email" />
+        <input asp-for="Password" type="text" placeholder="Password" />
+        <input type="submit" value="Register" />
+    </form>
+</div>

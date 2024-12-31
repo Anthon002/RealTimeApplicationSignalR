@@ -2,14 +2,20 @@ using Microsoft.AspNetCore.Mvc;
 using MediatR;
 
 namespace RealTimeApplication.MVC.Controllers;
-
 public class ChatController : Controller
 {
     private readonly ISender _sender;
-    public ChatController(ISender sender) => _sender = sender;
+    private readonly IHttpContextAccessor _httpContext;
+    public ChatController(ISender sender, IHttpContextAccessor httpContext)
+    { 
+        _sender = sender;
+        _httpContext = httpContext;
+    }
 
     public IActionResult Index(CancellationToken cancellationToken)
     {
+        var httpContext = _httpContext.HttpContext;
+        var user = httpContext?.User.Identity;
         return View();
     }
 
