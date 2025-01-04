@@ -8,6 +8,7 @@ namespace RealTimeApplication.MVC.Middleware
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly string LoginUrl = "Identity/Login";
         private readonly string SignUpUrl = "Identity/SignUp";
+        private readonly string ChatRoomUrl = "Chat/Index";
         public AuthenticationMiddleware(RequestDelegate next, IHttpContextAccessor httpContextAccessor)
         {
             _next = next;
@@ -20,7 +21,7 @@ namespace RealTimeApplication.MVC.Middleware
             var identity = httpContext?.User.Identity;
 
             var url = context.Request.Path.Value ?? "/";
-            if (url.Contains(LoginUrl) || url.Contains(SignUpUrl))
+            if (url.Contains(LoginUrl) || url.Contains(SignUpUrl) || url.Contains(ChatRoomUrl))
             {
                 await _next(context);
                 return;

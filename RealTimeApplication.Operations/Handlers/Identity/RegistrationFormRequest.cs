@@ -64,13 +64,24 @@ public sealed class RegistrationFormRequestHandler : IRequestHandler<Registratio
                 FirstName = request.FirstName,
                 LastName = request.LastName,
                 Email = request.Email,
-                UserName = request.Email
+                UserName = request.Email,
+            };
+
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.GivenName, request.FirstName),
+                new Claim(ClaimTypes.Surname, request.LastName)
             };
 
             await _userManager.CreateAsync(newUser, request.Password);
+            await _userManager.AddClaimsAsync(newUser, claims);
             await _context.AppUsers!.AddAsync(newUser, cancellationToken);
 
             await _signInManager.SignInAsync(newUser, isPersistent: true);
+            
+            var httpContext = _httpContext.HttpContext;
+
+
 
             await _context.SaveChangesAsync(cancellationToken);
 

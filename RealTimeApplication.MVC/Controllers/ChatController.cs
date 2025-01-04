@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
+using System.Net;
+using RealTimeApplication.Infrastructure.Models;
 
 namespace RealTimeApplication.MVC.Controllers;
 public class ChatController : Controller
@@ -18,6 +20,12 @@ public class ChatController : Controller
         var user = httpContext?.User.Identity;
         return View();
     }
+    // [HttpPost("{id:long}/FriendRequest")]
+    // [ProducesResponseType(typeof(BaseResponse<string>),(int)HttpStatusCode.OK)]
+    // public async Task<IActionResult> SendFriendRequest()
+    // {
+
+    // }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()

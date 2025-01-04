@@ -29,9 +29,17 @@ public class IdentityController : Controller
 
     [HttpGet]
     [ProducesResponseType(typeof(BaseResponse<string>), (int)HttpStatusCode.OK)]
-    public IActionResult Login([FromForm] LoginFormRequest request, CancellationToken cancellationToken)
+    public IActionResult Login(CancellationToken cancellationToken)
     {
         return View();
+    }
+
+    [HttpPost]
+    [ProducesResponseType(typeof(BaseResponse<string>), (int)HttpStatusCode.OK)]
+    public async Task<IActionResult> Login([FromForm] LoginFormRequest request, CancellationToken cancellationToken)
+    {
+        var response = await _sender.Send(request, cancellationToken);
+        return RedirectToAction("Index","Chat");
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -1,8 +1,8 @@
 ﻿@model RealTimeApplication.Operations.Handlers.Identity.LoginFormRequest;
 <div>
     <form asp-action="Login" asp-controller="Identity">
-        <input asp-for="UserName" type="text" placeholder="First Name" />
-        <input asp-for="Password" type="text" placeholder="Password" />
+        <input asp-for="UserName" type="text" placeholder="First Name" required />
+        <input asp-for="Password" type="text" placeholder="Password" required />
         <input type="submit" value="Login" />
     </form>
 </div>

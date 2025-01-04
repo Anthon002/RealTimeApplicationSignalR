@@ -8,6 +8,8 @@ var generalMessageField = document.getElementById("GeneralMessageField");
 var broadCastButton = document.getElementById("SendGeneralMsgBtn");
 var chatContainer = document.getElementById("ChatContainer");
 var notificationDiv = document.getElementById("isTypingNotficationDiv");
+var recipientEmail = document.getElementById("recipientEmail");
+var testButton = document.getElementById("testButton");
 
 broadCastButton.addEventListener("click", sendMessage);
 
@@ -23,17 +25,28 @@ broadCastConnection.on("SendGeneralNotification", (notification) => {
     notificationDiv.innerHTML = notification;
 })
 
-broadCastConnection.on("SendNotTypingNotification",() =>
-{
+broadCastConnection.on("SendNotTypingNotification", () => {
     notificationDiv.innerHTML = "";
 })
 
+broadCastConnection.on("sendToRecipient", (message, userName) => {
+    chatContainer.innerHTML += `<br> ${userName} : ${message}`;
+})
+
+broadCastConnection.on("TestMessage", (param1, param2) => {
+    console.log(param1);
+    console.log(param2);
+})
+
 //initial hub invocation/sending i.e hit the server hub
-function sendMessage() {
-    broadCastConnection.send("GeneralMessage", generalMessageField.value);
+async function sendMessage() {
+    var message = generalMessageField.value;
+    var email = recipientEmail.value;
+    await broadCastConnection.send("GeneralMessage", email, message);
+    await broadCastConnection.send("MessageToRecipient", email, message);
     notificationDiv.innerHTML = "";
     generalMessageField.value = ""
-    console.log("sendMessage hit");
+    console.log("WTF");
 }
 
 function userIsTyping() {
@@ -43,6 +56,10 @@ function userIsTyping() {
 
 function userIsNotTyping() {
     broadCastConnection.send("UserIsNotTypingNotification");
+}
+
+function TestingSignalR() {
+    broadCastConnection.send("TestHubMethod", "This is a test message", "Parameter 2");
 }
 
 //Start connection
