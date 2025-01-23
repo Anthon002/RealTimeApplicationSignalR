@@ -12,6 +12,7 @@ var recipientEmail = document.getElementById("recipientEmail");
 var testButton = document.getElementById("testButton");
 
 broadCastButton.addEventListener("click", sendMessage);
+testButton.addEventListener("click",  FriendRequests)
 
 generalMessageField.addEventListener("input", userIsTyping);
 generalMessageField.addEventListener("blur", userIsNotTyping)
@@ -38,6 +39,11 @@ broadCastConnection.on("TestMessage", (param1, param2) => {
     console.log(param2);
 })
 
+broadCastConnection.on("FriendRequests", (jsonRequests, status) => 
+{
+    console.log(`${jsonRequests}` + `${status}`)
+})
+
 //initial hub invocation/sending i.e hit the server hub
 async function sendMessage() {
     var message = generalMessageField.value;
@@ -60,6 +66,12 @@ function userIsNotTyping() {
 
 function TestingSignalR() {
     broadCastConnection.send("TestHubMethod", "This is a test message", "Parameter 2");
+}
+
+function FriendRequests()
+{
+    broadCastConnection.send("SendFriendRequests");
+    console.log("Test touched.");
 }
 
 //Start connection

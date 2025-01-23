@@ -10,5 +10,5 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
 
     }
     public DbSet<ApplicationUser> AppUsers { get; set; } = default!;
-
+    public DbSet<FriendRequests> FriendRequests { get; set; } = default!;
 }

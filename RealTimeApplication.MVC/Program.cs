@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using RealTimeApplication.Infrastructure.ApplicationSettingsOptions;
 using RealTimeApplication.Infrastructure.Data.Entities;
 using RealTimeApplication.Infrastructure.Hubs;
 using RealTimeApplication.MVC.Middleware;
@@ -16,6 +17,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     options.SlidingExpiration = true;
 });
 builder.Services.AddControllersWithViews();
+builder.Services.Configure<AppSettingsOptions>(builder.Configuration.GetSection("AppSettings"));
 builder.Services.AddSignalR(options =>
 {
     options.KeepAliveInterval = TimeSpan.FromSeconds(15);
@@ -52,7 +54,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-app.MapHub<ChatHub>("/hubs/ChatHub");
+//app.MapHub<ChatHub>("/hubs/ChatHub");
+app.MapHub<RealTimeDBHub>("hubs/ChatHub");
 
 app.MapControllerRoute(
     name: "default",

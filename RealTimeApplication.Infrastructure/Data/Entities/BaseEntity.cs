@@ -1,4 +1,3 @@
-
 namespace RealTimeApplication.Infrastructure.Data.Entities;
 
 public class BaseEntity
