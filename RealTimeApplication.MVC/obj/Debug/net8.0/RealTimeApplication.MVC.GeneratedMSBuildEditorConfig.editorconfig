@@ -18,8 +18,20 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\hp\Documents\PracticeProjects\RealtimeapplicationsignalR\RealTimeApplication.MVC
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Users/hp/Documents/PracticeProjects/RealtimeapplicationsignalR/RealTimeApplication.MVC/Views/Chat/ChatDm.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2hhdFxDaGF0RG0uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/hp/Documents/PracticeProjects/RealtimeapplicationsignalR/RealTimeApplication.MVC/Views/Chat/GetFriendRequests.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2hhdFxHZXRGcmllbmRSZXF1ZXN0cy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/hp/Documents/PracticeProjects/RealtimeapplicationsignalR/RealTimeApplication.MVC/Views/Chat/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2hhdFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/hp/Documents/PracticeProjects/RealtimeapplicationsignalR/RealTimeApplication.MVC/Views/Chat/SendFriendRequest.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2hhdFxTZW5kRnJpZW5kUmVxdWVzdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/hp/Documents/PracticeProjects/RealtimeapplicationsignalR/RealTimeApplication.MVC/Views/Home/Index.cshtml]

@@ -6,3 +6,9 @@ public enum FriendRequestStatusEnum
     Accepted,
     Rejected
 }
+
+public enum AcceptRejectRequestEnum
+{
+    Accept = 1,
+    Reject
+}

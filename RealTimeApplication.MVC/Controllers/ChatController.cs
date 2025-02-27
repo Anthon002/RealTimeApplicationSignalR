@@ -3,6 +3,7 @@ using MediatR;
 using System.Net;
 using RealTimeApplication.Infrastructure.Models;
 using RealTimeApplication.Operations.Handlers.Chat;
+using System.Threading.Tasks;
 
 namespace RealTimeApplication.MVC.Controllers;
 public class ChatController : Controller
@@ -24,22 +25,40 @@ public class ChatController : Controller
 
     [HttpPost("{id:long}/FriendRequest")]
     [ProducesResponseType(typeof(BaseResponse<string>), (int)HttpStatusCode.OK)]
-    public async Task<IActionResult> SendFriendRequest([FromForm] SendFriendRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> SendFriendRequest([FromForm] SendFriendRequest request, CancellationToken cancellationToken = default)
     {
         var response = await _sender.Send(request, cancellationToken);
         return View(response);
     }
 
-    [HttpGet("FriendRequests")]
+    [HttpGet]
     [ProducesResponseType(typeof(BaseResponse<string>), (int)HttpStatusCode.OK)]
-    public async Task<IActionResult> GetFriendRequests([FromQuery] GetFriendRequests request,  CancellationToken cancellationToken)
+    public IActionResult GetFriendRequests(CancellationToken cancellationToken)
     {
-        var response = await _sender.Send(request, cancellationToken);
-        return View(response);
+        return View();
     }
 
-    [HttpGet("ViewRequests")]
-    [ProducesResponseType(typeof(BaseResponse<FriendRequestResponse>), (int)HttpStatusCode.OK)]
+    [HttpPost("AcceptReject")]
+    [Produces("applicaiton/json")]
+    [ProducesResponseType(typeof(BaseResponse), (int)HttpStatusCode.OK)]
+    public async Task<IActionResult> AcceptReject([FromRoute] string id, [FromBody] AcceptRejectRequest request, CancellationToken cancellationToken)
+    {
+       // request.Id = id;
+        var response = await _sender.Send(request, cancellationToken);
+        if (response.Value != null)
+            return RedirectToAction("ChatDm",new {token = response.Value.Token});
+        return RedirectToAction("GetFriendRequest");
+    }
+    
+    [HttpGet("ChatDm")]
+    [ProducesResponseType(typeof(BaseResponse<RecieverEmailResponse>), (int)HttpStatusCode.OK)]
+    public async Task<IActionResult> ChatDm([FromRoute] string token, CancellationToken cancellationToken)
+    {
+        var response = await _sender.Send( new ChatDmRequest {Token = token}, cancellationToken);
+        if (response.Status)
+            return RedirectToAction("AcceptRejectRequest","Chat");
+        return View(response.Value);
+    }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()

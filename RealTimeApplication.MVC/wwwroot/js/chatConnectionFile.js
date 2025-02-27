@@ -4,6 +4,8 @@ var broadCastConnection = new signalR.HubConnectionBuilder()
     .withUrl("/hubs/ChatHub")
     .build()
 
+var isConnected = false;
+
 var generalMessageField = document.getElementById("GeneralMessageField");
 var broadCastButton = document.getElementById("SendGeneralMsgBtn");
 var chatContainer = document.getElementById("ChatContainer");
@@ -12,7 +14,9 @@ var recipientEmail = document.getElementById("recipientEmail");
 var testButton = document.getElementById("testButton");
 
 broadCastButton.addEventListener("click", sendMessage);
-testButton.addEventListener("click",  FriendRequests)
+//testButton.addEventListener("click",  FriendRequests)
+
+var interval = setInterval(FriendRequests(), 1000);
 
 generalMessageField.addEventListener("input", userIsTyping);
 generalMessageField.addEventListener("blur", userIsNotTyping)
@@ -70,14 +74,18 @@ function TestingSignalR() {
 
 function FriendRequests()
 {
-    broadCastConnection.send("SendFriendRequests");
-    console.log("Test touched.");
+    if (isConnected == true)
+    {
+        broadCastConnection.send("SendFriendRequests");
+        console.log("Test touched.");
+    }
 }
 
 //Start connection
 
 function fufilled() {
     console.log("Connection to chatHub established successfully");
+    isConnected = true;
 }
 
 function failed() {

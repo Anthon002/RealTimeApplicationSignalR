@@ -1,0 +1,13 @@
+@model RealTimeApplication.Infrastructure.Models.RecieverEmailResponse;
+
+<input value="@Model.RecieverEmail" type="hidden" id="recieverEmail">
+<input value="@Model.SenderEmail" type="hidden" id="senderEmail">
+<input value="@Model.Token" type="hidden" id="token">
+
+<div>
+    <input type="text" id="msgField">
+    <input type="button" value="Send" id="msgBtn">
+</div>
+
+<script src="~/js/signalr.js"></script>
+<script src="~/js/directMessaging.js"></script>

@@ -54,8 +54,11 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-//app.MapHub<ChatHub>("/hubs/ChatHub");
-app.MapHub<RealTimeDBHub>("hubs/ChatHub");
+
+app.MapHub<FriendRequestHub>("/hubs/FriendRequestHub");
+app.MapHub<ChatHub>("/hubs/ChatHub");
+app.MapHub<DmHubs>("/hubs/DmHubs");
+//app.MapHub<RealTimeDBHub>("hubs/ChatHub");
 
 app.MapControllerRoute(
     name: "default",

@@ -17,6 +17,14 @@
       "PackagePath": "staticwebassets\\js\\chatConnectionFile.js"
     },
     {
+      "Id": "C:\\Users\\hp\\Documents\\PracticeProjects\\RealtimeapplicationsignalR\\RealTimeApplication.MVC\\wwwroot\\js\\directMessaging.js",
+      "PackagePath": "staticwebassets\\js\\directMessaging.js"
+    },
+    {
+      "Id": "C:\\Users\\hp\\Documents\\PracticeProjects\\RealtimeapplicationsignalR\\RealTimeApplication.MVC\\wwwroot\\js\\friendRequests.js",
+      "PackagePath": "staticwebassets\\js\\friendRequests.js"
+    },
+    {
       "Id": "C:\\Users\\hp\\Documents\\PracticeProjects\\RealtimeapplicationsignalR\\RealTimeApplication.MVC\\wwwroot\\js\\signalr.js",
       "PackagePath": "staticwebassets\\js\\signalr.js"
     },

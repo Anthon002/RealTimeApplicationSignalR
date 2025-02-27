@@ -1,4 +1,6 @@
 using System.Security.Claims;
+using System.Security.Cryptography;
+using System.Text;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -39,6 +41,8 @@ public sealed class SendFriendRequestHandler : IRequestHandler<SendFriendRequest
 
         var user = await _context.Users.Select(x => new {x.UserIdentifier, x.Id}).FirstOrDefaultAsync(x => x.Id == userId.Value);
 
+        var token = GenerateToken(user!.UserIdentifier, recipient.UserIdentifier);
+
         //Implement email notification
 
         var friendRequest = new FriendRequests
@@ -46,9 +50,11 @@ public sealed class SendFriendRequestHandler : IRequestHandler<SendFriendRequest
             ReceiverId = recipient.UserIdentifier,
             SenderId = user!.UserIdentifier,
             Status = FriendRequestStatusEnum.Pending,
+            DmToken = token,
             TimeCreated = DateTimeOffset.UtcNow,
             TimeUpdated = DateTimeOffset.UtcNow,
         };
+        
         await _context.FriendRequests.AddAsync(friendRequest, cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);
 
@@ -59,7 +65,14 @@ public sealed class SendFriendRequestHandler : IRequestHandler<SendFriendRequest
             _logger.LogError(ex, "Chat_SendFriendRequestHandler => Application ran into an error while trying to send friend request.");
             return new BaseResponse<string>(false, "Application ran into an error while trying to send friend request.");
         }
+    }
 
-
+    public string GenerateToken(string senderId, string receiverId)
+    {
+        var _str = $"{senderId}{receiverId}{DateTimeOffset.UtcNow}{Guid.NewGuid()}";
+        var hash256 = SHA256.Create();
+        var hashedStr = hash256.ComputeHash(Encoding.ASCII.GetBytes(_str));
+        var token = Convert.ToBase64String(hashedStr);
+        return token;
     }
 }
