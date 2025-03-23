@@ -10,10 +10,11 @@
 using System;
 using System.Reflection;
 
+[assembly: System.Runtime.CompilerServices.InternalsVisibleToAttribute("RealTimeApplicationSignalR.RealTimeApplication.MVC")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("RealTimeApplication.Operations")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7b7795cb722dc5acb8b33f2b34aa2b4df37ffc1c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f30d8213d79be734422dc310a3de530012cd2adc")]
 [assembly: System.Reflection.AssemblyProductAttribute("RealTimeApplication.Operations")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RealTimeApplication.Operations")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

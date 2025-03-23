@@ -36,7 +36,7 @@ public sealed class ChatDmRequestHandler : IRequestHandler<ChatDmRequest, BaseRe
 
             if (friendRequest is null)
                 return new BaseResponse<RecieverEmailResponse>(false, "This token does not exists.");
-            
+
             if (friendRequest.Status != FriendRequestStatusEnum.Accepted)
                 return new BaseResponse<RecieverEmailResponse>(false, "Friend request has not been accepted.");
 
@@ -49,16 +49,21 @@ public sealed class ChatDmRequestHandler : IRequestHandler<ChatDmRequest, BaseRe
             if (!(currentUser.UserIdentifier == friendRequest.SenderId || currentUser.UserIdentifier == friendRequest.ReceiverId))
                 return new BaseResponse<RecieverEmailResponse>(false, "User not verified.");
 
-            var email1 = await _context.AppUsers.Where(x => x.UserIdentifier == friendRequest.SenderId).Select(x => x.Email).FirstOrDefaultAsync(cancellationToken);
-            var email2 = await _context.AppUsers.Where(x => x.UserIdentifier == friendRequest.ReceiverId).Select(x => x.Email).FirstOrDefaultAsync(cancellationToken);
+            var email1 = await _context.AppUsers.Where(x => x.UserIdentifier == friendRequest.SenderId).Select(x => new {x.Email, x.UserIdentifier, x.FirstName}).FirstOrDefaultAsync(cancellationToken);
+            var email2 = await _context.AppUsers.Where(x => x.UserIdentifier == friendRequest.ReceiverId).Select(x => new {x.Email, x.UserIdentifier, x.FirstName}).FirstOrDefaultAsync(cancellationToken);
 
-            var receipientEmail = email1 == currentUserEmail ? email2 : email1;
+            var receipientUserId = email1!.Email == currentUserEmail ? email2!.UserIdentifier : email1.UserIdentifier;
+            var friendName = email1!.Email == currentUserEmail ? email2!.FirstName : email1.FirstName;
+
 
             var response = new RecieverEmailResponse
             {
-                RecieverEmail = receipientEmail,
-                SenderEmail = currentUserEmail,
+                RecieverUserId = receipientUserId,
+                SenderUserId = currentUser.UserIdentifier,
                 Token = friendRequest.DmToken,
+                FriendName = friendName,
+                CurrentUserEmail = currentUser.Email
+                
             };
 
             return new BaseResponse<RecieverEmailResponse>(true, "User verified.", response);

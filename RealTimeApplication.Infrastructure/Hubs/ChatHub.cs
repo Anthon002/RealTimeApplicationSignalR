@@ -26,20 +26,15 @@ public sealed class ChatHub : Hub
         _userManager = userManager;
     }
 
-    public async void GeneralMessage(string email, string message)
+    public async void GeneralMessage(string message)
     {
         try
         {
-            if (email != string.Empty)
-                return;
-
             int index = Convert.ToInt32(GenerateIndex(0, randomNames.Count(), Context.ConnectionId));
             var userName = randomNames[index];
 
             var httpContext = _httpContextAccessor.HttpContext;
             var isAuthenticated = httpContext.User.Identity?.IsAuthenticated;
-
-
 
             if (isAuthenticated is not null)
             {
@@ -51,8 +46,7 @@ public sealed class ChatHub : Hub
                         userName = httpContext.User.Identity!.Name;
                 }
             }
-
-            await Clients.All.SendAsync("SendGeneralMessage", message, userName);
+            await Clients.All.SendAsync("SendGeneralMessage", message, userName, Context.ConnectionId.ToString());
         }
         catch (Exception ex)
         {

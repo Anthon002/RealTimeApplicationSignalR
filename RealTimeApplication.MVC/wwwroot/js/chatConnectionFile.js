@@ -1,3 +1,4 @@
+
 // Establish Connection
 var broadCastConnection = new signalR.HubConnectionBuilder()
     .configureLogging(signalR.LogLevel.Information)
@@ -10,10 +11,20 @@ var generalMessageField = document.getElementById("GeneralMessageField");
 var broadCastButton = document.getElementById("SendGeneralMsgBtn");
 var chatContainer = document.getElementById("ChatContainer");
 var notificationDiv = document.getElementById("isTypingNotficationDiv");
-var recipientEmail = document.getElementById("recipientEmail");
-var testButton = document.getElementById("testButton");
+var userMessageBubble = document.getElementById("userMessageBubble");
+var othersMessageBubble = document.getElementById("othersMessageBubble");
+var connectionId = ''
+
+// var recipientEmail = document.getElementById("recipientEmail");
+// var testButton = document.getElementById("testButton");
 
 broadCastButton.addEventListener("click", sendMessage);
+generalMessageField.addEventListener("keydown", (event)=>{
+if (event.key === "Enter"){
+    event.preventDefault();
+    sendMessage();
+}
+})
 //testButton.addEventListener("click",  FriendRequests)
 
 var interval = setInterval(FriendRequests(), 1000);
@@ -21,9 +32,36 @@ var interval = setInterval(FriendRequests(), 1000);
 generalMessageField.addEventListener("input", userIsTyping);
 generalMessageField.addEventListener("blur", userIsNotTyping)
 
+var bubblePos = -65;
+
 // Connect to HubMethod using clientConnectionKey
-broadCastConnection.on("SendGeneralMessage", (message, randomUserName) => {
-    chatContainer.innerHTML += `<br> ${randomUserName} : ${message}`;
+broadCastConnection.on("SendGeneralMessage", (message, userName, connectionID) => {
+    console.log(`js: ${connectionId}. Cs: ${connectionID}`)
+    
+    if (connectionId ==  connectionID)
+    {
+        var myBubble = userMessageBubble.cloneNode(true);
+        myBubble.style.bottom = `${bubblePos}px`
+        myBubble.innerHTML = `<br> ${userName} : ${message}`;
+        myBubble.style.display = 'block'
+        chatContainer.appendChild(myBubble)
+        myBubble.scrollIntoView({ behavior: "smooth"})
+        bubblePos += 10
+    }
+    else
+    {
+        var othersBubble = othersMessageBubble.cloneNode(true)
+        othersBubble.style.bottom = `${bubblePos}px`
+        othersBubble.innerHTML = `<br> ${userName} : ${message}`;
+        othersBubble.style.display = 'block'
+        chatContainer.appendChild(othersBubble)
+        othersBubble.scrollIntoView({ behavior: "smooth"})
+        bubblePos += 10
+    }
+    generalMessageField.value = ""
+    userIsNotTyping()
+
+    console.log("SendGeneralMessge retrieved")
 }) // collects the general
 
 broadCastConnection.on("SendGeneralNotification", (notification) => {
@@ -50,13 +88,17 @@ broadCastConnection.on("FriendRequests", (jsonRequests, status) =>
 
 //initial hub invocation/sending i.e hit the server hub
 async function sendMessage() {
+    console.log(generalMessageField.value)
     var message = generalMessageField.value;
-    var email = recipientEmail.value;
-    await broadCastConnection.send("GeneralMessage", email, message);
-    await broadCastConnection.send("MessageToRecipient", email, message);
-    notificationDiv.innerHTML = "";
-    generalMessageField.value = ""
-    console.log("WTF");
+    if (message.trim() == "")
+        return;
+
+   // var email = recipientEmail.value;
+    await broadCastConnection.send("GeneralMessage", message);
+    //await broadCastConnection.send("MessageToRecipient", " ", message);
+    // notificationDiv.innerHTML = "";
+    // generalMessageField.value = ""
+    console.log("General message hit");
 }
 
 function userIsTyping() {
@@ -84,8 +126,9 @@ function FriendRequests()
 //Start connection
 
 function fufilled() {
-    console.log("Connection to chatHub established successfully");
+    console.log(`Connection to chatHub established successfully. ConnectionId : ${broadCastConnection.connectionId}`);
     isConnected = true;
+    connectionId = broadCastConnection.connectionId
 }
 
 function failed() {

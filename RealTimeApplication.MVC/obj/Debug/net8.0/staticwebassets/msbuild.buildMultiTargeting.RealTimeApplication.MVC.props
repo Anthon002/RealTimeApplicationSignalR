@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\build\RealTimeApplication.MVC.props" />
-</Project>

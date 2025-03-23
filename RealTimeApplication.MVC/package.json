@@ -1,5 +1,21 @@
 {
   "dependencies": {
-    "@microsoft/signalr": "^8.0.7"
-  }
+    "@microsoft/signalr": "^8.0.7",
+    "@tailwindcss/cli": "^4.0.14"
+  },
+  "name": "realtimeapplication.mvc",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^4.0.14"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }

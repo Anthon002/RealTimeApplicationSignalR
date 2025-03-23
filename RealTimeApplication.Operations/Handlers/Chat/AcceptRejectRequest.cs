@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -41,12 +37,14 @@ public sealed class AcceptRejectRequestHandler : IRequestHandler<AcceptRejectReq
             if (request.Purpose == AcceptRejectRequestEnum.Accept)
             {
                 friendRequest.Status = FriendRequestStatusEnum.Accepted;
+                friendRequest.TimeUpdated = DateTimeOffset.UtcNow;
                 await _context.SaveChangesAsync(cancellationToken);
                 return new BaseResponse<AcceptRejectResponse>(true, "Friend request has been accepted.",new AcceptRejectResponse { Token = request.Token });
             }
             else
             {
                 friendRequest.Status = FriendRequestStatusEnum.Rejected;
+                friendRequest.TimeUpdated = DateTimeOffset.UtcNow;
                 return new BaseResponse<AcceptRejectResponse>(true, "Friend request has been rejected.");
             }
         }

@@ -1,8 +1,12 @@
 {
   "Files": [
     {
-      "Id": "C:\\Users\\hp\\Documents\\PracticeProjects\\RealtimeapplicationsignalR\\RealTimeApplication.MVC\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\RealTimeApplication.MVC.bundle.scp.css",
-      "PackagePath": "staticwebassets\\RealTimeApplication.MVC.bundle.scp.css"
+      "Id": "C:\\Users\\hp\\Documents\\PracticeProjects\\RealtimeapplicationsignalR\\RealTimeApplication.MVC\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\RealTimeApplicationSignalR.RealTimeApplication.MVC.bundle.scp.css",
+      "PackagePath": "staticwebassets\\RealTimeApplicationSignalR.RealTimeApplication.MVC.bundle.scp.css"
+    },
+    {
+      "Id": "C:\\Users\\hp\\Documents\\PracticeProjects\\RealtimeapplicationsignalR\\RealTimeApplication.MVC\\wwwroot\\css\\output.css",
+      "PackagePath": "staticwebassets\\css\\output.css"
     },
     {
       "Id": "C:\\Users\\hp\\Documents\\PracticeProjects\\RealtimeapplicationsignalR\\RealTimeApplication.MVC\\wwwroot\\css\\site.css",
@@ -11,6 +15,18 @@
     {
       "Id": "C:\\Users\\hp\\Documents\\PracticeProjects\\RealtimeapplicationsignalR\\RealTimeApplication.MVC\\wwwroot\\favicon.ico",
       "PackagePath": "staticwebassets\\favicon.ico"
+    },
+    {
+      "Id": "C:\\Users\\hp\\Documents\\PracticeProjects\\RealtimeapplicationsignalR\\RealTimeApplication.MVC\\wwwroot\\images\\accountpng.png",
+      "PackagePath": "staticwebassets\\images\\accountpng.png"
+    },
+    {
+      "Id": "C:\\Users\\hp\\Documents\\PracticeProjects\\RealtimeapplicationsignalR\\RealTimeApplication.MVC\\wwwroot\\images\\chatappIcon.webp",
+      "PackagePath": "staticwebassets\\images\\chatappIcon.webp"
+    },
+    {
+      "Id": "C:\\Users\\hp\\Documents\\PracticeProjects\\RealtimeapplicationsignalR\\RealTimeApplication.MVC\\wwwroot\\images\\send.png",
+      "PackagePath": "staticwebassets\\images\\send.png"
     },
     {
       "Id": "C:\\Users\\hp\\Documents\\PracticeProjects\\RealtimeapplicationsignalR\\RealTimeApplication.MVC\\wwwroot\\js\\chatConnectionFile.js",
@@ -261,20 +277,20 @@
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
     },
     {
-      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.RealTimeApplication.MVC.Microsoft.AspNetCore.StaticWebAssets.props",
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.RealTimeApplicationSignalR.RealTimeApplication.MVC.Microsoft.AspNetCore.StaticWebAssets.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
     },
     {
-      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.RealTimeApplication.MVC.props",
-      "PackagePath": "build\\RealTimeApplication.MVC.props"
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.RealTimeApplicationSignalR.RealTimeApplication.MVC.props",
+      "PackagePath": "build\\RealTimeApplicationSignalR.RealTimeApplication.MVC.props"
     },
     {
-      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.RealTimeApplication.MVC.props",
-      "PackagePath": "buildMultiTargeting\\RealTimeApplication.MVC.props"
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.RealTimeApplicationSignalR.RealTimeApplication.MVC.props",
+      "PackagePath": "buildMultiTargeting\\RealTimeApplicationSignalR.RealTimeApplication.MVC.props"
     },
     {
-      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.RealTimeApplication.MVC.props",
-      "PackagePath": "buildTransitive\\RealTimeApplication.MVC.props"
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.RealTimeApplicationSignalR.RealTimeApplication.MVC.props",
+      "PackagePath": "buildTransitive\\RealTimeApplicationSignalR.RealTimeApplication.MVC.props"
     }
   ],
   "ElementsToRemove": []

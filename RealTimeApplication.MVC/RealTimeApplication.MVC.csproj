@@ -13,6 +13,11 @@
   </ItemGroup>
 
   <PropertyGroup>
+  <AssemblyName>RealTimeApplicationSignalR.RealTimeApplication.MVC</AssemblyName>
+  <RootNamespace>RealTimeApplicationSignalR.RealTimeApplication.MVC</RootNamespace>
+</PropertyGroup>
+
+  <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>

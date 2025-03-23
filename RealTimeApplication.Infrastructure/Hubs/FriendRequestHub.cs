@@ -36,7 +36,7 @@ namespace RealTimeApplication.Infrastructure.Hubs
                                FirstName = user.FirstName, //sender first name
                                LastName = user.LastName, // sender last name
                                Id = user.UserIdentifier, // sender id
-                               UserId = userId.Id, // receiver/current user id
+                               UserId = userId.UserIdentifier, // receiver/current user id
                                Token = request.DmToken,
                            };
             var serializedResponse = JsonSerializer.Serialize(requests.ToArray());

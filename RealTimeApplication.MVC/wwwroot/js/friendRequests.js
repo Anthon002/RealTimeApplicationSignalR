@@ -24,7 +24,7 @@ connection.on("FriendRequests", (jsonResponse, _status) => {
         rejectBtn.innerHTML = "Reject";
 
         acceptBtn.addEventListener("click", () => {
-            fetch(`${element.UserId}/AcceptReject`, {
+            fetch(`/AcceptReject?id=${element.UserId}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -41,7 +41,7 @@ connection.on("FriendRequests", (jsonResponse, _status) => {
         })
 
         rejectBtn.addEventListener("click", () => {
-            fetch(`${element.UserId}/AcceptReject`, {
+            fetch(`/AcceptReject?id=${element.UserId}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

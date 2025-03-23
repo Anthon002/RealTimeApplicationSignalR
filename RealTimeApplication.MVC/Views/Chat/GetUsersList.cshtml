@@ -1,0 +1,48 @@
+<div>
+    <div id="usersListContainer">
+    </div>
+</div>
+
+<script>
+
+    var userDiv = document.getElementById("usersListContainer");
+
+    fetch(`/Users?PageNumber=1&PageSize=10`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        },
+    })
+        .then(response => response.json())
+        .then(data => {
+            data.value.records.forEach(element => {
+                var elementDiv = document.createElement("div");
+                var sendRequestBtn = document.createElement("button");
+
+                elementDiv.innerHTML = `${element.firstName} ${element.lastName}`
+                console.log(element.firstName, element.lastName)
+
+                sendRequestBtn.innerHTML = "Add Friend";
+                sendRequestBtn.addEventListener("click", () => SendRequest(element.userIdentifier))
+
+                userDiv.appendChild(elementDiv)
+                userDiv.appendChild(sendRequestBtn)
+            })
+        })
+        .catch(error => console.log("Error:", error))
+
+    function SendRequest(userIdentifier) {
+        fetch(`/FriendRequest`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                "UserIdentifier": userIdentifier
+            })
+        })
+            .then(response => response.json())
+            .then(data => console.log("Success:", data))
+            .catch(error => console.log("Error:", error))
+    }
+</script>

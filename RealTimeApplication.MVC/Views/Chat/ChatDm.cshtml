@@ -1,13 +1,94 @@
+@using RealTimeApplication.Infrastructure.Models
 @model RealTimeApplication.Infrastructure.Models.RecieverEmailResponse;
 
-<input value="@Model.RecieverEmail" type="hidden" id="recieverEmail">
-<input value="@Model.SenderEmail" type="hidden" id="senderEmail">
+<input value="@Model.RecieverUserId" type="hidden" id="recieverUserId">
+<input value="@Model.SenderUserId" type="hidden" id="senderUserId">
+<input value="@Model.Token" type="hidden" id="token">
+<input value="@Model.CurrentUserEmail" type="hidden" id="currentUserEmail">
+
+<header class="h-20 gap-10 shadow-lg flex justify-center bg-[#ADB2D4]">
+    <div class="sm:pl-10 sm:pr-10 lg:pl-30 lg:pr-30 bg-[#9197c0ee] absolute left-0 flex">
+        <a asp-action="Index" asp-controller="Chat"> <img src="/images/chatappIcon.webp" class="w-20" alt="appLogo"> </a>
+        <p class="items-center flex font-bold text-[#f0f1f5]">Chat App</p>
+    </div>
+    <div class="flex">
+        <p class="font-bold flex items-center text-1xl text-[#f0f0f3]"> @Model.FriendName </p>
+    </div>
+
+    <div class="border-1 rounded-xl absolute right-10 top-3">
+        <img src="/images/accountpng.png" class="flex w-10" alt="userAccount">
+    </div>
+</header>
+<content class="flex h-[90vh]">
+    <div class="w-[25vw] border-1 border-t-[#e1e5f7ee] bg-[#adb3daee]">
+        @* <div class="flex gap-5 border-1 border-white items-center font-bold text-[#060916ee] p-3">
+            <img src="" alt="Pic">
+            <div class="w-50">friend name</div>
+            <button class="bg-[#e1e5f7ee]">Chat</button>
+        </div>
+        <div class="flex gap-5 items-center font-bold text-[#060916ee] p-3 border-1 border-white">
+            <img src="" alt="Pic">
+            <div class="w-50">friend name</div>
+            <button class="bg-[#e1e5f7ee]">Chat</button>
+        </div>
+        <div class="flex gap-5 items-center font-bold text-[#060916ee] p-3 border-1 border-white">
+            <img src="" alt="Pic">
+            <div class="w-50">friend name</div>
+            <button class="bg-[#e1e5f7ee]">Chat</button>
+        </div> *@
+        @foreach(var friend in @ViewData["FriendsList"] as List<FriendsListResponse>)
+        {
+        <div class="flex gap-5 items-center font-bold text-[#060916ee] p-3 border-1 border-white">
+            <img src="" alt="Pic"> 
+                <form asp-action="ChatDm" asp-controller="Chat" asp-route-token="@friend.Token" method="get">
+                <span class="w-50"> @friend.FirstName </span>
+                <span class="w-50"> @friend.LastName </span>
+                <input type="submit" class="bg-[#e1e5f7ee] cursor-pointer rounded-xl p-3" value="Chat">
+                </form>
+        </div>
+        }
+    </div>
+
+    <div class="flex flex-col bg-[#cccfe4] border-white w-full shadow-[-5px_0_5px_#cccfe4] max-h-[100vh]">
+        <div class="flex gap-5 flex-col w-full h-[100vh] max-h-[100vh] overflow-auto" id="ChatContainer">
+
+            <button id="loadMoreMessages">
+                Load more messages
+            </button>
+
+            <div id="userMessageBubble" class="relative hidden bg-[#ffffff] max-w-[20vw] p-[1vw] justify-center items-center rounded-2xl left-[50vw]">
+                Sender Message Sender Message Sender Message Sender Message Sender Message Sender Message 
+            </div>
+            <div id="othersMessageBubble" class="relative hidden bg-[#e9ebfb] max-w-[20vw] p-[1vw] justify-center items-center rounded-2xl left-[0vw] ">
+                Receiver message 2
+            </div>
+        </div>
+        <div id="isTypingNotficationDiv" class="relative left-[2vw] w-[10vw]"></div>
+        <input id="msgField" type="text" placeholder="Type a message"
+            class="border-1 border-white bg-white flex relative left-[20vw] h-[5vh] w-[30vw] rounded-lg focus:outline-none">
+        <img id="msgBtn" src="/images/send.png"
+            class="w-8 relative bottom-[4vh] pb-5 cursor-pointer left-[51vw]" alt="">
+    </div>
+    
+    <form method="post" asp-action="Logout" asp-controller="Identity">
+        <input type="submit" value="logout">
+    </form>
+</content>
+
+
+@* 
+<input value="@Model.RecieverUserId" type="hidden" id="recieverUserId">
+<input value="@Model.SenderUserId" type="hidden" id="senderUserId">
 <input value="@Model.Token" type="hidden" id="token">
 
-<div>
-    <input type="text" id="msgField">
-    <input type="button" value="Send" id="msgBtn">
+<div id="messageBox">
+
 </div>
+
+<div>
+    <input type="text" class="" id="msgField">
+    <input type="button" value="Send" id="msgBtn">
+</div> *@
 
 <script src="~/js/signalr.js"></script>
 <script src="~/js/directMessaging.js"></script>

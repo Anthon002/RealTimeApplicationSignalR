@@ -39,7 +39,15 @@ public class IdentityController : Controller
     public async Task<IActionResult> Login([FromForm] LoginFormRequest request, CancellationToken cancellationToken)
     {
         var response = await _sender.Send(request, cancellationToken);
-        return RedirectToAction("Index","Chat");
+        return RedirectToAction("Index", "Chat");
+    }
+
+    [HttpPost("Logout")]
+    [ProducesResponseType(typeof(BaseResponse), (int)HttpStatusCode.OK)]
+    public async Task<IActionResult> Logout(CancellationToken cancellationToken)
+    {
+        var respones = await _sender.Send(new LogoutRequest(), cancellationToken);
+        return RedirectToAction("Index", "Chat");
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

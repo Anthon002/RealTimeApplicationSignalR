@@ -1,0 +1,13 @@
+@model IEnumerable<RealTimeApplication.Infrastructure.Models.FriendsListResponse>
+
+<div id="FriendsList">
+        @foreach(var friend in Model)
+        {
+            <form asp-action="ChatDm" asp-controller="Chat" asp-route-token="@friend.Token" method="get">
+                <span> @friend.FirstName </span>
+                <span> @friend.LastName </span>
+                <input type="submit" value="Chat">
+            </form>
+            @friend.Token
+        }
+</div>

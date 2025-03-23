@@ -5918,11 +5918,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\hp\\Documents\\PracticeProjects\\RealtimeapplicationsignalR\\RealTimeApplication.Mvc\\RealTimeApplication.Mvc.csproj",
-      "projectName": "RealTimeApplication.Mvc",
-      "projectPath": "C:\\Users\\hp\\Documents\\PracticeProjects\\RealtimeapplicationsignalR\\RealTimeApplication.Mvc\\RealTimeApplication.Mvc.csproj",
+      "projectUniqueName": "C:\\Users\\hp\\Documents\\PracticeProjects\\RealtimeapplicationsignalR\\RealTimeApplication.MVC\\RealTimeApplication.MVC.csproj",
+      "projectName": "RealTimeApplicationSignalR.RealTimeApplication.MVC",
+      "projectPath": "C:\\Users\\hp\\Documents\\PracticeProjects\\RealtimeapplicationsignalR\\RealTimeApplication.MVC\\RealTimeApplication.MVC.csproj",
       "packagesPath": "C:\\Users\\hp\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\hp\\Documents\\PracticeProjects\\RealtimeapplicationsignalR\\RealTimeApplication.Mvc\\obj\\",
+      "outputPath": "C:\\Users\\hp\\Documents\\PracticeProjects\\RealtimeapplicationsignalR\\RealTimeApplication.MVC\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\hp\\AppData\\Roaming\\NuGet\\NuGet.Config"

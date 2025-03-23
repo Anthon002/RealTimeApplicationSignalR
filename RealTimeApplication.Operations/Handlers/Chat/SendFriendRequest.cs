@@ -13,7 +13,7 @@ namespace RealTimeApplication.Operations.Handlers.Chat;
 
 public sealed record SendFriendRequest : IRequest<BaseResponse<string>>
 {
-    public string? Email { get; set; }
+    public string? UserIdentifier { get; set; }
 }
 
 public sealed class SendFriendRequestHandler : IRequestHandler<SendFriendRequest, BaseResponse<string>>
@@ -31,36 +31,44 @@ public sealed class SendFriendRequestHandler : IRequestHandler<SendFriendRequest
     {
         try
         {
-        var recipient = await _context.Users.Select(x => new { x.Email, x.UserIdentifier }).FirstOrDefaultAsync(x => x.Email == request.Email, cancellationToken);
-        var userId = _httpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
+            var recipient = await _context.Users.Select(x => new { x.Email, x.UserIdentifier }).FirstOrDefaultAsync(x => x.UserIdentifier == request.UserIdentifier, cancellationToken);
 
-        if (userId is null)
-            return new BaseResponse<string>(false, "You are not signed in.");
-        if (recipient is null)
-            return new BaseResponse<string>(false, "This user does not exists.");
+            var userId = _httpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
 
-        var user = await _context.Users.Select(x => new {x.UserIdentifier, x.Id}).FirstOrDefaultAsync(x => x.Id == userId.Value);
+            if (userId is null)
+                return new BaseResponse<string>(false, "You are not signed in.");
+            if (recipient is null)
+                return new BaseResponse<string>(false, "This user does not exists.");
 
+            var user = await _context.Users.Select(x => new { x.UserIdentifier, x.Id }).FirstOrDefaultAsync(x => x.Id == userId.Value);
+            if (user is null)
+                return new BaseResponse<string>(false, "Signed in user not found.");
+
+            var requestExists = await _context.FriendRequests.AnyAsync(x => (x.SenderId == user.UserIdentifier && x.ReceiverId == request.UserIdentifier) || (x.ReceiverId == user.UserIdentifier && x.SenderId == request.UserIdentifier));
+
+            if (requestExists)
+                return new BaseResponse<string>(false,"You already have a friend request with this user.");
+                
         var token = GenerateToken(user!.UserIdentifier, recipient.UserIdentifier);
 
-        //Implement email notification
+            //Implement email notification
 
-        var friendRequest = new FriendRequests
-        {
-            ReceiverId = recipient.UserIdentifier,
-            SenderId = user!.UserIdentifier,
-            Status = FriendRequestStatusEnum.Pending,
-            DmToken = token,
-            TimeCreated = DateTimeOffset.UtcNow,
-            TimeUpdated = DateTimeOffset.UtcNow,
-        };
-        
-        await _context.FriendRequests.AddAsync(friendRequest, cancellationToken);
-        await _context.SaveChangesAsync(cancellationToken);
+            var friendRequest = new FriendRequests
+            {
+                ReceiverId = recipient.UserIdentifier,
+                SenderId = user!.UserIdentifier,
+                Status = FriendRequestStatusEnum.Pending,
+                DmToken = token,
+                TimeCreated = DateTimeOffset.UtcNow,
+                TimeUpdated = DateTimeOffset.UtcNow,
+            };
 
-        return new BaseResponse<string>(true, "Friend request sent successfully.");
+            await _context.FriendRequests.AddAsync(friendRequest, cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);
+
+            return new BaseResponse<string>(true, "Friend request sent successfully.");
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError(ex, "Chat_SendFriendRequestHandler => Application ran into an error while trying to send friend request.");
             return new BaseResponse<string>(false, "Application ran into an error while trying to send friend request.");

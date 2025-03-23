@@ -11,12 +11,30 @@ public sealed class FriendRequestResponse
 
 public sealed class RecieverEmailResponse
 {
-    public string? RecieverEmail { get; set; } 
-    public string? SenderEmail { get; set; } 
+    public string? RecieverUserId { get; set; } 
+    public string? SenderUserId { get; set; } 
+    public string? FriendName { get; set; }
     public string? Token { get; set; } 
+    public string? CurrentUserEmail { get; set; }
 }
 
 public sealed class AcceptRejectResponse
 {
     public string? Token { get; set; } 
+}
+
+public sealed class FriendsListResponse
+{
+    public string? UserIdentifier { get; set; }
+    public string? FirstName { get; set; }
+    public string? LastName { get; set; }
+    public string? Token { get; set; }
+}
+
+public sealed class UsersResponse
+{
+    public string? ProfilePicture { get; set; }
+    public string? FirstName { get; set; }
+    public string? LastName { get; set; }
+    public string? UserIdentifier { get; set; }
 }
