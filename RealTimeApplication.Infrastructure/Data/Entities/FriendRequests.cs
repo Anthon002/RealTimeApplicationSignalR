@@ -11,5 +11,13 @@ public sealed class FriendRequests : BaseEntity
     public string ReceiverId { get; set; } = default!;
     public FriendRequestStatusEnum Status { get; set; }
     public string? DmToken { get; set; }
-    
+
+}
+
+public sealed class FriendInvite : BaseEntity
+{
+    [MaxLength(50)]
+    public string UserId { get; set; } = default!;
+    [MaxLength(100)]
+    public string RecieverEmail { get; set; } = default!;
 }

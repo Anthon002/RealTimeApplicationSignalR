@@ -40,11 +40,11 @@ public sealed class SendFriendRequestHandler : IRequestHandler<SendFriendRequest
             if (recipient is null)
                 return new BaseResponse<string>(false, "This user does not exists.");
 
-            var user = await _context.Users.Select(x => new { x.UserIdentifier, x.Id }).FirstOrDefaultAsync(x => x.Id == userId.Value);
+            var user = await _context.Users.Select(x => new { x.UserIdentifier, x.Id }).FirstOrDefaultAsync(x => x.Id == userId.Value, cancellationToken);
             if (user is null)
                 return new BaseResponse<string>(false, "Signed in user not found.");
 
-            var requestExists = await _context.FriendRequests.AnyAsync(x => (x.SenderId == user.UserIdentifier && x.ReceiverId == request.UserIdentifier) || (x.ReceiverId == user.UserIdentifier && x.SenderId == request.UserIdentifier));
+            var requestExists = await _context.FriendRequests.AnyAsync(x => ((x.SenderId == user.UserIdentifier && x.ReceiverId == request.UserIdentifier) || (x.ReceiverId == user.UserIdentifier && x.SenderId == request.UserIdentifier)) && x.Status == FriendRequestStatusEnum.Pending, cancellationToken);
 
             if (requestExists)
                 return new BaseResponse<string>(false,"You already have a friend request with this user.");

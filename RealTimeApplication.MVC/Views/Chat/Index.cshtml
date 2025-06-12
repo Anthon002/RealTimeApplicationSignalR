@@ -1,4 +1,4 @@
-@model IEnumerable<RealTimeApplication.Infrastructure.Models.FriendsListResponse>;
+@model IEnumerable<RealTimeApplication.Infrastructure.Models.FriendsListResponse>
 
 <header class="h-20 gap-10 shadow-lg flex justify-center bg-[#ADB2D4]">
     <div class="sm:pl-10 sm:pr-10 lg:pl-30 lg:pr-30 bg-[#9197c0ee] absolute left-0 flex">
@@ -9,8 +9,26 @@
         <p class="font-bold flex items-center text-1xl text-[#f0f0f3]"> General Chat</p>
     </div>
 
-    <div class="border-1 rounded-xl absolute right-10 top-3">
+    <div class="flex gap-5 justify-center rounded-xl absolute right-10 top-3">
         <img src="images/accountpng.png" class="flex w-10" alt="userAccount">
+@if(ViewData["user"] != null)
+{
+    <form method="post" asp-action="Logout" asp-controller="Identity">
+        <input class=" border-1 p-2 rounded-2xl cursor-pointer hover:bg-[#616687ee]  text-zinc-100" type="submit" value="Logout">
+    </form>
+
+    <form asp-action="SendInvites" asp-controller="Chat" method="post">
+        <input type="text" placeholder="friend@example.com" name="Email" class="border-1 p-2 rounded-2xl text-zinc-100">
+        <input type="submit" value="Invite" class="cursor-pointer hover:bg-[#616687ee]">
+    </form>
+    @* <p class="max-w-[30px]">
+        @TempData["InviteResponseMessage"]
+    </p> *@
+}else{
+    <a asp-action="Login" asp-controller="Identity">
+        <input class=" border-1 p-2 rounded-2xl cursor-pointer hover:bg-[#616687ee]  text-zinc-100" type="submit" value="Login">
+    </a> 
+}
     </div>
 </header>
 <content class="flex h-[90vh]">
@@ -47,7 +65,7 @@
     <div class="flex flex-col bg-[#cccfe4] border-white w-full shadow-[-5px_0_5px_#cccfe4] max-h-[100vh]">
         <div class="flex gap-5 flex-col w-full h-[100vh] max-h-[100vh] overflow-auto" id="ChatContainer">
             <div id="userMessageBubble" class="relative hidden bg-[#ffffff] max-w-[20vw] p-[1vw] justify-center items-center rounded-2xl left-[50vw]">
-                Sender Message Sender Message Sender Message Sender Message Sender Message Sender Message 
+                Sender Message 
             </div>
             <div id="othersMessageBubble" class="relative hidden bg-[#e9ebfb] max-w-[20vw] p-[1vw] justify-center items-center rounded-2xl left-[0vw] ">
                 Receiver message 2
@@ -60,9 +78,6 @@
             class="w-8 relative bottom-[4vh] pb-5 cursor-pointer left-[51vw]" alt="">
     </div>
     
-    <form method="post" asp-action="Logout" asp-controller="Identity">
-        <input type="submit" value="logout">
-    </form>
 </content>
 
 @* <div>

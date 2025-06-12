@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RealTimeApplicationSignalR.RealTimeApplication.MVC")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f30d8213d79be734422dc310a3de530012cd2adc")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fb54a96b59f7fb58ea279c50d855b37ac8f37f93")]
 [assembly: System.Reflection.AssemblyProductAttribute("RealTimeApplicationSignalR.RealTimeApplication.MVC")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RealTimeApplicationSignalR.RealTimeApplication.MVC")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

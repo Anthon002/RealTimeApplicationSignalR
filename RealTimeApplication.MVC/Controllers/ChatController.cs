@@ -3,6 +3,7 @@ using MediatR;
 using System.Net;
 using RealTimeApplication.Infrastructure.Models;
 using RealTimeApplication.Operations.Handlers.Chat;
+using Microsoft.AspNetCore.Authorization;
 
 namespace RealTimeApplication.MVC.Controllers;
 public class ChatController : Controller
@@ -15,11 +16,12 @@ public class ChatController : Controller
         _httpContext = httpContext;
     }
 
-    public async Task<IActionResult> Index(CancellationToken cancellationToken)
+    public async Task<IActionResult> Index(string? responseMessage = default ,CancellationToken cancellationToken = default!)
     {
         var httpContext = _httpContext.HttpContext;
         var user = httpContext?.User.Identity;
         ViewData["user"] = user?.Name;
+        TempData["InviteResponseMessage"] = responseMessage;
         var friendList = await _sender.Send(new GetFriendListRequest { Email = user?.Name }, cancellationToken);
 
         return View(friendList.Value);
@@ -80,6 +82,7 @@ public class ChatController : Controller
         var currentFriend = friends?.FirstOrDefault(x => x.Token == token);
         friends?.Remove(currentFriend!);
         ViewData["FriendsList"] = friends ?? new List<FriendsListResponse>{ new FriendsListResponse {FirstName = "Get More Friends"} };
+        ViewData["User"] = userName;
         if (!response.Status)
             return RedirectToAction("AcceptRejectRequest", "Chat");
         return View(response.Value);
@@ -116,6 +119,16 @@ public class ChatController : Controller
         if (!response.Status)
             return BadRequest(response);
         return Ok(response);
+    }
+
+    [HttpPost("Invite")]
+    [ProducesResponseType(typeof(BaseResponse), (int)HttpStatusCode.OK)]
+    [Authorize]
+    public async Task<IActionResult> SendInvites([FromForm] SendInviteRequest request, CancellationToken cancellationToken)
+    {
+        var response = await _sender.Send(request, cancellationToken);
+        ViewData["InviteResponseMessage"] = response.Message;
+        return RedirectToAction("Index","Chat", new { responseMessage = response.Message});
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

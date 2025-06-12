@@ -6,6 +6,10 @@ using RealTimeApplication.Infrastructure.ApplicationSettingsOptions;
 using RealTimeApplication.Infrastructure.Data.Entities;
 using RealTimeApplication.Infrastructure.Hubs;
 using RealTimeApplication.MVC.Middleware;
+using RealTimeApplication.Operations.Repo.Integrations.Implementations;
+using RealTimeApplication.Operations.Repo.Integrations.Interfaces;
+using RealTimeApplication.Operations.Repo.Services.Implementations;
+using RealTimeApplication.Operations.Repo.Services.Interfaces;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,25 +20,30 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
     options.SlidingExpiration = true;
 });
+builder.Services.AddAuthorization();
 builder.Services.AddControllersWithViews();
-builder.Services.Configure<AppSettingsOptions>(builder.Configuration.GetSection("AppSettings"));
+builder.Services.Configure<AppSettingsOptions>(builder.Configuration.GetSection("ApplicationSettings"));
 builder.Services.AddSignalR(options =>
 {
     options.KeepAliveInterval = TimeSpan.FromSeconds(15);
     options.ClientTimeoutInterval = TimeSpan.FromSeconds(15);
     options.HandshakeTimeout = TimeSpan.FromSeconds(15);
 });
+
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("default"));
 });
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
+builder.Services.AddScoped<IEmailGatewayService, BrevoService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(RealTimeApplication.Operations.Handlers.Identity.RegistrationFormRequestHandler).Assembly));
 
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddHttpClient();
 
 
 var app = builder.Build();
@@ -47,13 +56,13 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-app.UseRouting();
 
 app.MapHub<FriendRequestHub>("/hubs/FriendRequestHub");
 app.MapHub<ChatHub>("/hubs/ChatHub");

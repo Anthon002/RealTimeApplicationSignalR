@@ -1,4 +1,12 @@
+<p>Send a friend request to an existing user </p>
 <form asp-action="SendFriendRequest" asp-controller="Chat" method="post">
     <input type="text" name="Email">
     <input type="submit" value="Send Friend Request">
+</form>
+
+<p> Invite a new user </p>
+
+<form asp-action="SendInvites" asp-controller="Chat" method="post">
+    <input type="text" name="Email">
+    <input type="submit" value="Invite a new user">
 </form>
